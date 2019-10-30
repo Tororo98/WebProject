@@ -14,6 +14,6 @@ services:
     volumes:
       - /var/lib/mysql
     environment:
-       MYSQL_ROOT_PASSWORD: supersecure
-       MYSQL_DATABASE: flaskwebapi
+       MYSQL_ROOT_PASSWORD: 3ad853f1abc94a67dc9ceed07547d5aa6dd5ce129611feb2
+       MYSQL_DATABASE: dinerUser
     hostname: mydbserver
