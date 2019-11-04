@@ -19,7 +19,7 @@ services:
     build: ./movies_api
     image: python_service_movies_api
     container_name: pythonServiceMoviesAPI
-    command: python3 main.py
+    command: python2 main.py
     ports:
       - "5008:5000"
     volumes:
