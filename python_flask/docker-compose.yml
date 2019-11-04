@@ -1,19 +1,32 @@
-version: '2'
+version: "2"
 services:
-  www:
-    build: www/.
+  db:
+    image: mysql:5.7
+    container_name: dinerUser
+    ports: 
+        - "33060:3306"
+    environment:
+        MYSQL_DATABASE: mysql
+        MYSQL_USER: dev
+        MYSQL_PASSWORD: 123456
+        MYSQL_ROOT_PASSWORD: test 
+    volumes:
+        - ./movies_api/dump:/docker-entrypoint-initdb.d
+        - persistent:/var/lib/mysql
+    networks:
+        - default
+  moviesapi:
+    build: ./movies_api
+    image: python_service_movies_api
+    container_name: pythonServiceMoviesAPI
+    command: python3 main.py
     ports:
-      - "5000:5000"
+      - "5008:5000"
+    volumes:
+      - ./movies_api:/code
     links:
       - db
     depends_on:
       - db
-    hostname: myappserver
-  db:
-    build: db/.
-    volumes:
-      - /var/lib/mysql
-    environment:
-       MYSQL_ROOT_PASSWORD: 3ad853f1abc94a67dc9ceed07547d5aa6dd5ce129611feb2
-       MYSQL_DATABASE: dinerUser
-    hostname: mydbserver
+volumes:
+    persistent:
